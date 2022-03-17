@@ -1,0 +1,27 @@
+//including needed libary 
+#include <Grove_Temperature_And_Humidity_Sensor.h>
+
+//define pin D2
+#define DHTPIN 	D2     
+
+DHT dht(DHTPIN);
+
+//setup
+void setup() {
+	Serial.begin(9600);
+	dht.begin();
+}
+
+void loop() {
+    //define variable
+	float t = dht.getTempCelcius();
+	
+	//define temp
+	String temp = String(t);
+	
+	//sent temp to weebhook and events
+	Particle.publish("temp", temp, PRIVATE);
+	
+	//30sec delay
+	delay(30000);
+}
